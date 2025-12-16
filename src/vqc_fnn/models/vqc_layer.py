@@ -176,6 +176,3 @@ class VQCLayer(nn.Module):
         For standard PyTorch + Pennylane, autograd handles gradients automatically.
         """
         pass
-
-
-    
