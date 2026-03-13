@@ -77,7 +77,8 @@ class QuantumSelfAttention(nn.Module):
             attn_weights = F.softmax(K_interfered, dim=-1)  # (seq_len, seq_len)
 
             # Weighted sum over values
-            attn_out = torch.matmul(attn_weights, V[b])  # (seq_len, embed_dim)
+            # attn_out = torch.matmul(attn_weights, V[b])  # (seq_len, embed_dim)
+            attn_out = torch.matmul(attn_weights.to(V[b].dtype), V[b])  # Ensure same dtype
 
             attn_outputs.append(attn_out)
             attn_matrices.append(attn_weights)

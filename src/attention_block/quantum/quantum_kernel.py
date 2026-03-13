@@ -22,7 +22,7 @@ class QuantumKernel:
        
         self.ansatz = StronglyEntanglingAnsatz(n_qubits, n_layers)
 
-        @qml.qnode(self.dev, interface="torch")
+        @qml.qnode(self.dev, interface="torch",diff_method="parameter-shift")
         def expval_circuit(x: torch.Tensor, weights: torch.Tensor) -> torch.Tensor:
             """
 
@@ -60,7 +60,8 @@ class QuantumKernel:
         expvals = []
         for i in range(batch_size):
             expval = self.expval_circuit(X[i], weights)  
-            expval = torch.tensor(expval, dtype=X.dtype)  
+            expval = torch.stack(expval)  
+            
             expvals.append(expval)
 
         expvals = torch.stack(expvals)  
