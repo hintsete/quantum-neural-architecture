@@ -10,7 +10,8 @@ __pycache__/
 # Dataset caches
 cached_datasets/
 datasets/
-data/
+
+
 
 # Experiment outputs
 results/
