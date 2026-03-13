@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+env/
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints
+
+# Logs
+*.log
