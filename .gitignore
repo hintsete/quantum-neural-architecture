@@ -1,0 +1,18 @@
+# Virtual environments
+venv/
+.env/
+.venv/
+env/
+
+# Python
+__pycache__/
+
+# Dataset caches
+cached_datasets/
+datasets/
+data/
+
+# Experiment outputs
+results/
+logs/
+checkpoints/
