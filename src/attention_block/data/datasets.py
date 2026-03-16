@@ -36,7 +36,10 @@ class TextClassificationDataset(Dataset):
         padding_len = self.max_seq_len - len(tokens)
         tokens = tokens + [0] * padding_len  
 
-        return torch.tensor(tokens, dtype=torch.long), torch.tensor(self.labels[idx], dtype=torch.long)
+        return {
+            "input_ids": torch.tensor(tokens, dtype=torch.long),
+            "labels": torch.tensor(self.labels[idx], dtype=torch.long)
+        }
 
 
 
