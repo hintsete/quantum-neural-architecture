@@ -72,7 +72,7 @@ class QSANN(nn.Module):
             torch.empty(len_vocab, num_qubits * (depth_ebd * 2 + 1), 2).uniform_(-np.pi, np.pi)
         )
 
-        # Final prediction head (same as original)
+        # Final prediction head
         self.weight = nn.Parameter(
             torch.randn(num_qubits * (depth_ebd * 2 + 1) * 2) * 0.001
         )
