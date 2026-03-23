@@ -15,8 +15,6 @@ class FFNN(nn.Module):
         self.net = nn.Sequential(
             nn.Linear(n_input, hidden_size),
             nn.ReLU(),
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),
             nn.Linear(hidden_size, 1),
             nn.Sigmoid(),
         )
@@ -47,9 +45,7 @@ class ClassicalBaseline:
     def param_count(self):
         return sum(p.numel() for p in self.model.parameters())
 
-    # ------------------------------------------------------------------
-    # Training
-    # ------------------------------------------------------------------
+
 
     def fit(self, X_train, Y_train, epochs=200, X_val=None, Y_val=None, verbose_every=20):
         """
@@ -89,9 +85,6 @@ class ClassicalBaseline:
 
         return {"train_history": train_history, "val_history": val_history}
 
-    # ------------------------------------------------------------------
-    # Inference
-    # ------------------------------------------------------------------
 
     def predict(self, X):
         """Return predicted probabilities as a numpy array."""
@@ -105,9 +98,6 @@ class ClassicalBaseline:
         probs = self.predict(X)
         return (probs >= threshold).astype(int)
 
-    # ------------------------------------------------------------------
-    # Helpers
-    # ------------------------------------------------------------------
 
     def _eval_loss(self, X, Y, criterion):
         self.model.eval()

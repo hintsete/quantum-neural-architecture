@@ -16,6 +16,7 @@ class AnsatzLayer:
     """
 
     def __init__(self, method="strong", n_layers=3, rotation=None):
+
         self.method = method.lower()
         self.n_layers = n_layers
 
@@ -32,6 +33,7 @@ class AnsatzLayer:
 
     def apply(self, weights, wires):
         """Applies the chosen parameterized layers to the quantum tape."""
+
         if self.method == "basic":
             kwargs = {"weights": weights, "wires": wires}
             if self.rotation is not None:
@@ -52,6 +54,7 @@ class AnsatzLayer:
         Dynamically calculates the exact tensor shape required for the weights
         so you never get a matrix mismatch error during initialization.
         """
+        
         if self.method == "basic":
             return qml.BasicEntanglerLayers.shape(
                 n_layers=self.n_layers, n_wires=n_qubits

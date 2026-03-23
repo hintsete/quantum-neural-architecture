@@ -9,7 +9,6 @@ _OPTIMIZERS = {
     "spsa": qml.SPSAOptimizer,
 }
 
-
 class Trainer:
     """
     Handles the classical optimization loop for a VQCModel.
@@ -39,18 +38,15 @@ class Trainer:
             )
         self.opt = _OPTIMIZERS[key](stepsize=stepsize)
 
-    # ------------------------------------------------------------------
+    
     # Cost helpers
-    # ------------------------------------------------------------------
 
     def cost_function(self, weights, X, Y):
         """Mean Squared Error over the given samples."""
         predictions = np.array([self.model.forward(x, weights) for x in X])
         return np.mean((predictions - Y) ** 2)
 
-    # ------------------------------------------------------------------
     # Training loop
-    # ------------------------------------------------------------------
 
     def fit(
         self,

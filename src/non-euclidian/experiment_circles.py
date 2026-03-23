@@ -57,17 +57,17 @@ def load_data(n_samples=200, noise=0.1, seed=42):
 # ======================================================================
 
 def train_vqc(Xb_train, yb_train, Xb_test, yb_test,
-              n_layers=3, epochs=40, stepsize=0.15):
+              n_layers=2, epochs=300, stepsize=0.15):
     n_qubits = 2
 
     embedding = EmbeddingLayer(method="spherical")
     ansatz = AnsatzLayer(method="strong", n_layers=n_layers)
     model = VQCModel(
-        n_qubits=n_qubits,
-        embedding=embedding,
-        ansatz=ansatz,
-        measurement="expval",
-        dropout_rate=0.0,
+        n_qubits = n_qubits,
+        embedding = embedding,
+        ansatz = ansatz,
+        measurement = "expval",
+        dropout_rate = 0.0,
     )
 
     Xb_train_pnp = pnp.array(Xb_train, requires_grad=False)
@@ -101,7 +101,7 @@ def train_vqc(Xb_train, yb_train, Xb_test, yb_test,
 # ======================================================================
 
 def train_classical(X_train, y_train, X_test, y_test, epochs=300):
-    baseline = ClassicalBaseline(n_input=2, hidden_size=16, lr=0.01)
+    baseline = ClassicalBaseline(n_input=2, hidden_size=4, lr=0.01)
     print(f"\n=== Classical FFNN ({baseline.param_count()} params) ===")
     cls_results = baseline.fit(
         X_train.astype(np.float32), y_train.astype(np.float32),

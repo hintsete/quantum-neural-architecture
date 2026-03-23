@@ -110,7 +110,7 @@ def train_classical_raw(h_train, y_train, h_test, y_test, epochs=400):
     X_tr = h_train.reshape(-1, 1).astype(np.float32) / 24.0
     X_te = h_test.reshape(-1, 1).astype(np.float32) / 24.0
 
-    baseline = ClassicalBaseline(n_input=1, hidden_size=16, lr=0.01)
+    baseline = ClassicalBaseline(n_input=1, hidden_size=4, lr=0.01)
     print(f"\n=== FFNN on raw hour ({baseline.param_count()} params) ===")
     res = baseline.fit(
         X_tr, y_train.astype(np.float32), epochs=epochs,

@@ -33,6 +33,7 @@ class VQCModel:
     """
 
     def __init__(
+            
         self,
         n_qubits,
         embedding=None,
@@ -57,40 +58,44 @@ class VQCModel:
         self.device = qml.device(device_name, wires=n_qubits)
         self._qnode = qml.QNode(self._circuit, self.device)
 
-    # ------------------------------------------------------------------
+
     # Quantum dropout
-    # ------------------------------------------------------------------
 
     def _apply_dropout(self, weights):
         """Zero-out rotation angles with probability ``dropout_rate``."""
+
         if self.training and self.dropout_rate > 0:
             mask = np.random.binomial(
-                1, 1 - self.dropout_rate, size=weights.shape
+                1, 1 - self.dropout_rate, size = weights.shape
             )
             return weights * mask
         return weights
 
-    # ------------------------------------------------------------------
-    # Circuit definition
-    # ------------------------------------------------------------------
 
+    # Circuit definition
+    
     def _circuit(self, features, weights):
+        """This function is where our circuit is deifned from all the initial 
+        classes(Embedding, Ansatz, and Mesurment) that are configured"""
+
         wires = range(self.n_qubits)
         self.embedding.apply(features, wires)
         self.ansatz.apply(weights, wires)
         return self._measure(wires)
 
     def _measure(self, wires):
+        """Measurment of the circuit based on the type gien when initializing the trainer class"""
+        
         if self.measurement == "expval":
             return qml.expval(qml.PauliZ(wires[0]))
+        
         elif self.measurement == "probs":
             return qml.probs(wires=wires)
+        
         elif self.measurement == "expval_all":
             return [qml.expval(qml.PauliZ(w)) for w in wires]
 
-    # ------------------------------------------------------------------
     # Public API
-    # ------------------------------------------------------------------
 
     def forward(self, x, weights):
         """Run one input sample through the circuit and return the result."""

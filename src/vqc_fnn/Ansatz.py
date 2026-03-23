@@ -7,7 +7,7 @@ SUPPORTED_METHODS = ("basic", "strong", "random")
 class AnsatzLayer:
     """
     Handles the trainable quantum gates (the variational layers).
-    Supported methods: 'basic', 'strong', 'random'
+    Supported ansatz: 'basic', 'strong', 'random'
     """
 
     def __init__(self, method="basic", n_layers=3, rotation=None):
@@ -28,7 +28,7 @@ class AnsatzLayer:
 
     def apply(self, weights, wires):
         """
-        Applies the chosen parameterized layers to the quantum tape."""
+        The function applies the chosen parameterized layers to the quantum tape."""
 
         if self.method == "basic":
             
@@ -49,8 +49,8 @@ class AnsatzLayer:
     def get_weight_shape(self, n_qubits):
 
         """
-        Dynamically calculates the exact tensor shape required for the weights
-        to avoid a matrix mismatch error during tialization.
+        The function dynamically calculates the exact tensor shape required for the weights
+        to avoid a matrix mismatch error during initialization.
         """
         if self.method == "basic":
             return qml.BasicEntanglerLayers.shape(

@@ -44,9 +44,17 @@ class Trainer:
     # ------------------------------------------------------------------
 
     def cost_function(self, weights, X, Y):
-        """Mean Squared Error over the given samples."""
-        predictions = np.array([self.model.forward(x, weights) for x in X])
-        return np.mean((predictions - Y) ** 2)
+        """Binary cross-entropy on rescaled VQC output.
+
+        The PauliZ expectation value in [-1, +1] is mapped to [0, 1]
+        via (raw + 1) / 2, then standard BCE is applied.
+        """
+        raw = np.array([self.model.forward(x, weights) for x in X])
+        probs = (raw + 1.0) / 2.0
+        probs = np.clip(probs, 1e-7, 1.0 - 1e-7)
+        return -np.mean(
+            Y * np.log(probs) + (1.0 - Y) * np.log(1.0 - probs)
+        )
 
     # ------------------------------------------------------------------
     # Training loop
